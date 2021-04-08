@@ -91,11 +91,12 @@ pip3 install -r requirement.txt
 ## Ejecución del script
 Uso:
 ```
-python3 raspi-blockclock.py <intervalo> <zona-horaria>
+python3 raspi-blockclock.py <intervalo> <zona-horaria> <moneda>
 ```
 Donde:
 - **intervalo**: intervalo (en segundos) tras el que queremos que actualice el precio. Te recomiendo no usar un intervalo muy corto ya que la página desde donde se obtienen los datos podría bloquear tu IP. Un intervalo de 5 (300) o 10 (600) minutos debe funcionar bien.
 - **zona-horaria**: esto se usa para que aparezca correctamente la hora de la ultima actualización en la parte superior de la pantalla. 
+- **moneda**: indicar USD o EUR segun la moneda que queramos utilizar
 
 a) Si queremos que se inicie automáticamente al enchufar la Raspberry Pi Zero, debemos añadir la siguiente linea al archivo rc.local
 ```
@@ -103,13 +104,13 @@ sudo nano /etc/rc.local
 ```
 Al final del archivo, antes de la linea ```exit 0``` añadimos el siguiente comando
 ```
-sudo python3 /home/pi/raspi-blockclock/btc_ticker.py 300 Europe/Madrid &
+sudo python3 /home/pi/raspi-blockclock/btc_ticker.py 300 Europe/Madrid USD &
 ```
 *En este ejemplo he utilizado como intervalo de refresco 5 minutos (300 segundos) y como zona horaria Europe/Madrid, pero puedes cambiar estos parámetros a tu conveniencia*
 
 b) Si queremos poner en marcha el script nosotros manualmente debemos ejecutarlo con de la siguiente forma, para que el proceso no se pare cuando cerremos la sesión de SSH
 ```
-nohup python3 /home/pi/raspi-blockclock/btc_ticker.py 300 Europe/Madrid &
+nohup python3 /home/pi/raspi-blockclock/btc_ticker.py 300 Europe/Madrid USD
 ```
 ## Opcional
 Si la luz verde del LED de la Raspberry Pi Zero W nos parece molesto, podemos desactivarlo con el siguiente comando
