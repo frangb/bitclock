@@ -10,6 +10,7 @@ Necesitaremos el siguiente material. Dejo los enlaces de Aliexpress de lo que he
 - 1 x fuente alimentacion para raspberry pi zero (si la necesitas. En caso que tengas alguna regleta donde conectarla por USB con salida de 5V no sería necearia)
 - 1 x pantalla waveshare e-ink de 2'13 pulgadas [enlace](https://es.aliexpress.com/item/4001261285356.html?spm=a2g0s.9042311.0.0.5d5363c0IMK1H6)
 - 1 x teclado USB (puedes usar cualquier teclado que tengas por casa, ya que va a ser solo un momento) y un adaptador USB a mini-USB para poder conectarlo [enlace](https://es.aliexpress.com/item/1005001894830612.html?spm=a2g0o.productlist.0.0.3e52645fcWv8zN&algo_pvid=e53fb4cd-43b2-458f-9b1c-6b3fcd091c48&algo_expid=e53fb4cd-43b2-458f-9b1c-6b3fcd091c48-4&btsid=2100bde116178130299921634edfcd&ws_ab_test=searchweb0_0,searchweb201602_,searchweb201603_)
+- 1 x tarjeta microSD de 8 GB o superior
 
 ## Montaje
 Si hemos comprado la raspberry pi zero w con el pin header ya montado, no hay ninguna complicación, simplemente encajar la pantalla en el puerto GPIO de la raspberry
