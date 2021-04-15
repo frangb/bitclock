@@ -1,6 +1,6 @@
 # raspi-blockclock
 Blockclock para mostrar el precio actual del BTC en una raspberry Pi zero W con pantalla de tinta electrónica
-<img src="https://github.com/frangb/raspi-blockclock/blob/main/raspi-blockclock.jpg" alt="raspi-blockclock" width="300"/>
+<img src="https://github.com/frangb/raspi-blockclock/blob/master/raspi-blockclock.jpeg" alt="raspi-blockclock" width="300"/>
 
 
 ## Lista de la compra.
