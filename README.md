@@ -74,6 +74,7 @@ El sistema nos pedira la contraseña del usuario ```pi```. Escribiremos ```raspb
 ## Instalar herramientas y dependencias
 ```
 sudo apt-get update
+sudo apt-get install git
 sudo apt-get install python3-pip
 sudo apt-get install python3-pil
 ```
@@ -96,7 +97,7 @@ python3 raspi-blockclock.py <intervalo> <zona-horaria> <moneda>
 ```
 Donde:
 - **intervalo**: intervalo (en segundos) tras el que queremos que actualice el precio. Te recomiendo no usar un intervalo muy corto ya que la página desde donde se obtienen los datos podría bloquear tu IP. Un intervalo de 5 (300) o 10 (600) minutos debe funcionar bien.
-- **zona-horaria**: esto se usa para que aparezca correctamente la hora de la ultima actualización en la parte superior de la pantalla. 
+- **zona-horaria**: esto se usa para que aparezca correctamente la hora de la ultima actualización en la parte superior de la pantalla. Puedes consultar las zonas horarias disponibles [aqui][https://en.wikipedia.org/wiki/List_of_tz_database_time_zones] (elige una de las zonas de la columna "TZ database name")
 - **moneda**: indicar USD o EUR segun la moneda que queramos utilizar
 
 a) Si queremos que se inicie automáticamente al enchufar la Raspberry Pi Zero, debemos añadir la siguiente linea al archivo rc.local
