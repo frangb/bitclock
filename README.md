@@ -77,6 +77,7 @@ sudo apt-get update
 sudo apt-get install git
 sudo apt-get install python3-pip
 sudo apt-get install python3-pil
+sudo apt-get install libatlas-base-dev
 ```
 
 ## Descarga del código del script
@@ -87,18 +88,20 @@ sudo git clone https://github.com/frangb/raspi-blockclock
 Instalamos los paquetes requeridos
 ```
 cd raspi-blockclock
-pip3 install -r requirement.txt
+pip3 install -r requirements.txt
 ```
 
 ## Ejecución del script
 Uso:
 ```
-python3 btc_ticker.py <intervalo> <zona-horaria> <moneda>
+python3 btc_ticker.py [-h] [-t TIME] [-c {USD,EUR}] [-d {PRICE,BLOCK,PRCBLK}] [-tz TIMEZONE]
 ```
-Donde:
-- **intervalo**: intervalo (en segundos) tras el que queremos que actualice el precio. Te recomiendo no usar un intervalo muy corto ya que la página desde donde se obtienen los datos podría bloquear tu IP. Un intervalo de 5 (300) o 10 (600) minutos debe funcionar bien.
-- **zona-horaria**: esto se usa para que aparezca correctamente la hora de la ultima actualización en la parte superior de la pantalla. Puedes consultar las zonas horarias disponibles [aqui](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Elige una de las zonas de la columna "TZ database name", por ejemplo "Europe/Madrid"
-- **moneda**: indicar USD o EUR segun la moneda que queramos utilizar
+
+Disponemos de los siguientes argumentos opcionales:
+**-t, --time**: tiempo de refresco (en segundos) tras el que queremos que actualice el precio. Te recomiendo no usar un intervalo muy corto ya que la página desde donde se obtienen los datos podría bloquear tu IP. Un intervalo de 5 (300) o 10 (600) minutos debe funcionar bien. Si no se indica nada, por defecto se tomarán 60 segundos.
+**-tz, --timezone**: esto se usa para que aparezca correctamente la hora de la ultima actualización en la parte superior de la pantalla. Puedes consultar las zonas horarias disponibles [aqui](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Elige una de las zonas de la columna "TZ database name", por ejemplo "Europe/Madrid". Si no se indica nada, por defecto se usará la zona "Europe/Madrid".
+**-c, --currency**: indicar USD o EUR segun la moneda que queramos utilizar. Si no se indica nada, por defecto se mostrará en USD.
+**-d, --display**: información que mostraremos en la pantalla. Indicar PRICE si queremos unicamente mostrar el precio, BLOCK si queremos mostrar la altura del bloque actual, o PRCBLK si queremos alternar entre ambos. Si no se indica nada, por defecto se mostrará el precio.
 
 a) Si queremos que se inicie automáticamente al enchufar la Raspberry Pi Zero, debemos añadir la siguiente linea al archivo rc.local
 ```
@@ -106,14 +109,15 @@ sudo nano /etc/rc.local
 ```
 Al final del archivo, antes de la linea ```exit 0``` añadimos el siguiente comando
 ```
-sudo python3 /home/pi/raspi-blockclock/btc_ticker.py 300 Europe/Madrid USD &
+sudo python3 btc_ticker.py -t 300 -c USD -d PRICE -tz Europe/Madrid &
 ```
 *En este ejemplo he utilizado como intervalo de refresco 5 minutos (300 segundos) y como zona horaria Europe/Madrid, pero puedes cambiar estos parámetros a tu conveniencia*
 
 b) Si queremos poner en marcha el script nosotros manualmente debemos ejecutarlo con de la siguiente forma, para que el proceso no se pare cuando cerremos la sesión de SSH
 ```
-nohup python3 /home/pi/raspi-blockclock/btc_ticker.py 300 Europe/Madrid USD
+nohup python3 /home/pi/raspi-blockclock/btc_ticker.py -t 300 -c USD -d PRICE -tz Europe/Madrid
 ```
+
 ## Opcional
 Si la luz verde del LED de la Raspberry Pi Zero W nos parece molesto, podemos desactivarlo con el siguiente comando
 ```

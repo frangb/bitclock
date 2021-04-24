@@ -1,36 +1,41 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
 from PIL import Image, ImageDraw, ImageFont
+from datetime import datetime
 import traceback
 import time
 import logging
 import sys
 import os
 import requests
-from datetime import datetime
 import pytz
+import argparse
 
-if len(sys.argv) != 4:
-	print("Son necesarios tres argumentos: tiempo de refresco (en segundos), zona horaria y moneda")
-	sys.exit()
+parser = argparse.ArgumentParser(description="Muestra en la pantalla de tinta electrónica la información solicitada por el usuario")
+parser.add_argument("-t", "--time",
+					help="tiempo de refresco en segundos",
+					type=int,
+					default=60)
 
-try:
-	tz = pytz.timezone(sys.argv[2])
-except pytz.UnknownTimeZoneError:
-	print('la zona %s no existe' % sys.argv[2])
-	sys.exit()
+parser.add_argument("-c", "--currency",
+					help="Moneda para mostrar el precio de bitcoin (USD o EUR)", 
+					type=str, 
+					choices=["USD", "EUR"], 
+					default="USD")
 
-try:
-	refresh_time = int(sys.argv[1])
-except ValueError:
-	print('El intervalo de refresco debe ser un numero entero (segundos)')
-	sys.exit()
+parser.add_argument("-d", "--display",
+					type=str,
+					help="Información a mostrar: PRICE, BLOCK o PRCBLK (alternar entre los dos)",
+					choices=["PRICE", "BLOCK", "PRCBLK"],
+					default="PRICE")
 
-moneda = sys.argv[3]
-if (moneda != 'USD') and (moneda != 'EUR'):
-	print('La moneda debe ser USD o EUR')
-	sys.exit()
-	
+parser.add_argument("-tz", "--timezone",
+					type=str,
+					help="zona horaria: ejemplo Europe/Madrid, America/Bogota, ... ",
+					default="Europe/Madrid")
+
+args = parser.parse_args()
+tz = pytz.timezone(args.timezone)
 
 picdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'pic')
 libdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'lib')
@@ -52,8 +57,11 @@ try:
 
 	# Fonts
 	font14 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 14)
+	font20 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 20)
 	# Esta es la fuente que usaremos para el precio del BTC
-	font96 = ImageFont.truetype(os.path.join(picdir, 'DS-DIGIT.TTF'), 96)
+	fontprice = ImageFont.truetype(os.path.join(picdir, 'DS-DIGIT.TTF'), 96)
+	# Esta para el bloque (mas pequeña porque hacen falta seis dígitos)
+	fontblk = ImageFont.truetype(os.path.join(picdir, 'DS-DIGIT.TTF'), 80)
 
 	logging.info("Drawing on the image...")
 	image = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
@@ -63,24 +71,54 @@ try:
 	epd.init(epd.FULL_UPDATE)
 	
 	#get btc price from coindesk
+	displayblock = False
 	while (True):
-		try:
-			response = requests.get('https://api.coindesk.com/v1/bpi/currentprice.json')
-			data = response.json()
-			price = str(int(float(data["bpi"][moneda]["rate"].replace(",",""))))
-		except requests.exceptions.RequestException:
-			price = "Err"
-			pass #volveremos a intentar tras el intervalo
-
 		now = datetime.now()
 		time_image = Image.new('1', (epd.height, epd.width), 255)
 		time_draw = ImageDraw.Draw(time_image)
-		#escribimos el precio
-		time_draw.text((5, 20), price, font = font96, fill = 0)
+		
+		#obtenemos precio
+		if((args.display == "PRICE") or (args.display == "PRCBLK")):
+			try:
+				response = requests.get('https://api.coindesk.com/v1/bpi/currentprice.json')
+				data = response.json()
+				price = str(int(float(data["bpi"][args.currency]["rate"].replace(",",""))))
+			except requests.exceptions.RequestException:
+				price = "Err"
+				pass #volveremos a intentar tras el intervalo
+		
+		#obtenemos bloque
+		if((args.display == "BLOCK") or (args.display == "PRCBLK")):
+			try:
+				response = requests.get('https://blockchain.info/latestblock')
+				data = response.json()
+				block =  str(data['height'])
+			except requests.exceptions.RequestException:
+				block = "Err Blk"
+				pass #volveremos a intentar tras el intervalo
+		
+		if(args.display == "PRICE"):
+			time_draw.text((5, 20), price, font = fontprice, fill = 0)
+			time_draw.text((95, 100), args.currency, font = font14, fill = 0)
+   
+		elif(args.display == "BLOCK"):
+			time_draw.text((5, 20), block, font = fontblk, fill = 0)
+			time_draw.text((95, 100), "BLOCK", font = font14, fill = 0)
+   
+		elif(args.display == "PRCBLK"):
+			if displayblock:
+				time_draw.text((5, 20), block, font = fontblk, fill = 0)
+				time_draw.text((95, 100), "BLOCK", font = font14, fill = 0)
+				displayblock = False
+			else:
+				time_draw.text((5, 20), price, font = fontprice, fill = 0)
+				time_draw.text((95, 100), args.currency, font = font14, fill = 0)
+				displayblock = True
+    
 		#escribimos la fecha y hora encima
 		time_draw.text((5, 0), tz.localize(now).strftime("%d/%m/%Y %H:%M:%S"), font = font14, fill = 0)
 		epd.display(epd.getbuffer(time_image))
-		time.sleep(refresh_time)
+		time.sleep(args.time)
 
 	# ed.Clear(0xFF)
 	logging.info("Clear...")
