@@ -98,9 +98,13 @@ python3 btc_ticker.py [-h] [-t TIME] [-c {USD,EUR}] [-d {PRICE,BLOCK,PRCBLK}] [-
 ```
 
 Disponemos de los siguientes argumentos opcionales:
+
 **-t, --time**: tiempo de refresco (en segundos) tras el que queremos que actualice el precio. Te recomiendo no usar un intervalo muy corto ya que la página desde donde se obtienen los datos podría bloquear tu IP. Un intervalo de 5 (300) o 10 (600) minutos debe funcionar bien. Si no se indica nada, por defecto se tomarán 60 segundos.
+
 **-tz, --timezone**: esto se usa para que aparezca correctamente la hora de la ultima actualización en la parte superior de la pantalla. Puedes consultar las zonas horarias disponibles [aqui](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Elige una de las zonas de la columna "TZ database name", por ejemplo "Europe/Madrid". Si no se indica nada, por defecto se usará la zona "Europe/Madrid".
+
 **-c, --currency**: indicar USD o EUR segun la moneda que queramos utilizar. Si no se indica nada, por defecto se mostrará en USD.
+
 **-d, --display**: información que mostraremos en la pantalla. Indicar PRICE si queremos unicamente mostrar el precio, BLOCK si queremos mostrar la altura del bloque actual, o PRCBLK si queremos alternar entre ambos. Si no se indica nada, por defecto se mostrará el precio.
 
 a) Si queremos que se inicie automáticamente al enchufar la Raspberry Pi Zero, debemos añadir la siguiente linea al archivo rc.local
