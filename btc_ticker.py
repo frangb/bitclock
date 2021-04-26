@@ -13,7 +13,7 @@ import argparse
 
 parser = argparse.ArgumentParser(description="Muestra en la pantalla de tinta electrónica la información solicitada por el usuario")
 parser.add_argument("-t", "--time",
-					help="tiempo de refresco en segundos",
+					help="Tiempo de refresco en segundos",
 					type=int,
 					default=60)
 
@@ -31,7 +31,7 @@ parser.add_argument("-d", "--display",
 
 parser.add_argument("-tz", "--timezone",
 					type=str,
-					help="zona horaria: ejemplo Europe/Madrid, America/Bogota, ... ",
+					help="Zona horaria: ejemplo Europe/Madrid, America/Bogota, ... para ver las zonas disponibles, consultar en http://https://en.wikipedia.org/wiki/List_of_tz_database_time_zones",
 					default="Europe/Madrid")
 
 args = parser.parse_args()
@@ -57,6 +57,7 @@ try:
 
 	# Fonts
 	font14 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 14)
+	font16 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 16)
 	font20 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 20)
 	# Esta es la fuente que usaremos para el precio del BTC
 	fontprice = ImageFont.truetype(os.path.join(picdir, 'DS-DIGIT.TTF'), 96)
@@ -96,23 +97,31 @@ try:
 			except requests.exceptions.RequestException:
 				block = "Err Blk"
 				pass #volveremos a intentar tras el intervalo
-		
+			
+			try:
+				response = requests.get('https://mempool.space/api/v1/fees/recommended')
+				data = response.json()
+				fee = "Fee: " + str(data['fastestFee']) + " / " + str(data['halfHourFee']) + " / " + str(data['hourFee']) + " sats/vByte"
+			except requests.exceptions.RequestException:
+				fee = "Err Fee"
+				pass #volvemos a intentar tras el intervalo
+
 		if(args.display == "PRICE"):
 			time_draw.text((5, 20), price, font = fontprice, fill = 0)
-			time_draw.text((95, 100), args.currency, font = font14, fill = 0)
+			time_draw.text((100, 105), args.currency, font = font16, fill = 0)
    
 		elif(args.display == "BLOCK"):
 			time_draw.text((5, 20), block, font = fontblk, fill = 0)
-			time_draw.text((95, 100), "BLOCK", font = font14, fill = 0)
+			time_draw.text((15, 100), fee, font = font16, fill = 0)
    
 		elif(args.display == "PRCBLK"):
 			if displayblock:
 				time_draw.text((5, 20), block, font = fontblk, fill = 0)
-				time_draw.text((95, 100), "BLOCK", font = font14, fill = 0)
+				time_draw.text((15, 100), fee, font = font16, fill = 0)
 				displayblock = False
 			else:
 				time_draw.text((5, 20), price, font = fontprice, fill = 0)
-				time_draw.text((95, 100), args.currency, font = font14, fill = 0)
+				time_draw.text((100, 105), args.currency, font = font16, fill = 0)
 				displayblock = True
     
 		#escribimos la fecha y hora encima

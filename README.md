@@ -13,10 +13,10 @@ Necesitaremos el siguiente material. Dejo los enlaces de Aliexpress de lo que he
 - 1 x tarjeta microSD de 8 GB o superior
 
 ## Montaje
-Si hemos comprado la raspberry pi zero w con el pin header ya montado, no hay ninguna complicación, simplemente encajar la pantalla en el puerto GPIO de la raspberry
+Si hemos comprado la Raspberry Pi Zero w con el pin header ya montado, no habrá ninguna complicación. Simplemente encajaremos la pantalla en el puerto GPIO de la raspberry y listo.
 
 ## Sistema operativo de la raspberry pi zero
-Descargar el S.O. Raspberry Pi OS Lite de la siguiente dirección oficial
+Descargar el sistema operativo Raspberry Pi OS Lite de la siguiente dirección oficial
 https://www.raspberrypi.org/software/operating-systems/
 
 Debemos grabar el Sistema Operativo en una tarjeta SD de tamaño suficiente (con una pequeña de 1 GB debe bastar). Para grabar la imagen yo personalmente uso le aplicación Etcher. Es multiplataforma y la podéis descargar [aqui](https://www.balena.io/etcher/)
@@ -103,11 +103,11 @@ Disponemos de los siguientes argumentos opcionales:
 
 **-t, --time**: tiempo de refresco (en segundos) tras el que queremos que actualice el precio. Te recomiendo no usar un intervalo muy corto ya que la página desde donde se obtienen los datos podría bloquear tu IP. Un intervalo de 5 (300) o 10 (600) minutos debe funcionar bien. Si no se indica nada, por defecto se tomarán 60 segundos.
 
-**-tz, --timezone**: esto se usa para que aparezca correctamente la hora de la ultima actualización en la parte superior de la pantalla. Puedes consultar las zonas horarias disponibles [aqui](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Elige una de las zonas de la columna "TZ database name", por ejemplo "Europe/Madrid". Si no se indica nada, por defecto se usará la zona "Europe/Madrid".
-
 **-c, --currency**: indicar USD o EUR segun la moneda que queramos utilizar. Si no se indica nada, por defecto se mostrará en USD.
 
-**-d, --display**: información que mostraremos en la pantalla. Indicar PRICE si queremos unicamente mostrar el precio, BLOCK si queremos mostrar la altura del bloque actual, o PRCBLK si queremos alternar entre ambos. Si no se indica nada, por defecto se mostrará el precio.
+**-d, --display**: información que mostraremos en la pantalla. Indicar PRICE si queremos unicamente mostrar el precio, BLOCK si queremos mostrar la altura del bloque actual y las fees estimadas para confirmación inmediata / 30 min / 1 hora, o PRCBLK si queremos alternar entre ambos modos. Si no se indica nada, por defecto se mostrará el precio.
+
+**-tz, --timezone**: esto se usa para que aparezca correctamente la hora de la ultima actualización en la parte superior de la pantalla. Puedes consultar las zonas horarias disponibles [aqui](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Elige una de las zonas de la columna "TZ database name", por ejemplo "Europe/Madrid". Si no se indica nada, por defecto se usará la zona "Europe/Madrid".
 
 a) Si queremos que se inicie automáticamente al enchufar la Raspberry Pi Zero, debemos añadir la siguiente linea al archivo rc.local
 ```
@@ -129,3 +129,14 @@ Si la luz verde del LED de la Raspberry Pi Zero W nos parece molesto, podemos de
 ```
 echo none | sudo tee /sys/class/leds/led0/trigger
 ```
+
+## ¿Cómo actualizar?
+Si el proyecto ha sufrido algún cambio y necesitas actualizarlo, únicamente tienes que acceder por ssh a tu raspberry pi zero, borrar el directorio de la aplicación mediante el comando:
+'''
+rm -rf raspi-blockclock
+'''
+
+y a continuación volver a descargar el repositorio mediante el comando:
+'''
+git clone https://github.com/frangb/raspi-blockclock
+'''
