@@ -132,11 +132,11 @@ echo none | sudo tee /sys/class/leds/led0/trigger
 
 ## ¿Cómo actualizar?
 Si el proyecto ha sufrido algún cambio y necesitas actualizarlo, únicamente tienes que acceder por ssh a tu raspberry pi zero, borrar el directorio de la aplicación mediante el comando:
-'''
+```
 rm -rf raspi-blockclock
-'''
+```
 
 y a continuación volver a descargar el repositorio mediante el comando:
-'''
+```
 git clone https://github.com/frangb/raspi-blockclock
-'''
+```
