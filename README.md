@@ -1,13 +1,13 @@
-# raspi-blockclock
-Blockclock para mostrar el precio actual del BTC en una raspberry Pi zero W con pantalla de tinta electrónica
+# bitclock
+bitclock es un proyecto para mostrar información relativa a bitcoin en una raspberry Pi zero W con pantalla de tinta electrónica
 <img src="https://github.com/frangb/raspi-blockclock/blob/master/raspi-blockclock.jpg" alt="raspi-blockclock" width="300"/>
 
 
 ## Lista de la compra.
 Necesitaremos el siguiente material. Dejo los enlaces de Aliexpress de lo que he comprado yo, pero en realidad lo podéis comprar donde queráis (amazon, etc...)
-- 1 x raspberry pi zero w, si puede ser con el pin header ya montado, esto te facilitará las cosas [enlace](https://es.aliexpress.com/item/4000693620101.html?spm=a2g0s.9042311.0.0.5d5363c0IMK1H6)
+- 1 x Raspberry Pi Zero W, si puede ser con el pin header ya montado, esto te facilitará las cosas [enlace](https://es.aliexpress.com/item/4000693620101.html?spm=a2g0s.9042311.0.0.5d5363c0IMK1H6)
 - 1 x cable micro hdmi a hdmi (o un adaptador micro hdmi a hdmi si ya tienes cable) [enlace](https://es.aliexpress.com/item/10000404075798.html?spm=a2g0s.9042311.0.0.5d5363c0IMK1H6)
-- 1 x fuente alimentacion para raspberry pi zero (si la necesitas. En caso que tengas alguna regleta donde conectarla por USB con salida de 5V no sería necearia)
+- 1 x fuente alimentación para raspberry pi zero (si la necesitas. En caso que tengas alguna regleta donde conectarla por USB con salida de 5V no sería necesaria)
 - 1 x pantalla waveshare e-ink de 2'13 pulgadas [enlace](https://es.aliexpress.com/item/4001261285356.html?spm=a2g0s.9042311.0.0.5d5363c0IMK1H6)
 - 1 x teclado USB (puedes usar cualquier teclado que tengas por casa, ya que va a ser solo un momento) y un adaptador USB a mini-USB para poder conectarlo [enlace](https://es.aliexpress.com/item/1005001894830612.html?spm=a2g0o.productlist.0.0.3e52645fcWv8zN&algo_pvid=e53fb4cd-43b2-458f-9b1c-6b3fcd091c48&algo_expid=e53fb4cd-43b2-458f-9b1c-6b3fcd091c48-4&btsid=2100bde116178130299921634edfcd&ws_ab_test=searchweb0_0,searchweb201602_,searchweb201603_)
 - 1 x tarjeta microSD de 8 GB o superior
@@ -83,12 +83,12 @@ sudo apt-get install libatlas-base-dev
 ## Descarga del código del script
 Descargamos el proyecto desde github
 ```
-sudo git clone https://github.com/frangb/raspi-blockclock
+sudo git clone https://github.com/frangb/bitclock
 ```
 Instalamos los paquetes requeridos
 ```
-cd raspi-blockclock
-pip3 install -r requirements.txt
+cd bitclock
+sudo pip3 install -r requirements.txt
 ```
 
 ## Ejecución del script
@@ -133,7 +133,7 @@ echo none | sudo tee /sys/class/leds/led0/trigger
 ## ¿Cómo actualizar?
 Si el proyecto ha sufrido algún cambio y necesitas actualizarlo, únicamente tienes que acceder por ssh a tu raspberry pi zero, borrar el directorio de la aplicación mediante el comando:
 ```
-rm -rf raspi-blockclock
+rm -rf bitclock
 ```
 
 y a continuación volver a descargar el repositorio mediante el comando:
