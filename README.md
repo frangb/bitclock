@@ -1,6 +1,7 @@
 # bitclock
 bitclock es un proyecto para mostrar información relativa a bitcoin en una raspberry Pi zero W con pantalla de tinta electrónica
-<img src="https://github.com/frangb/raspi-blockclock/blob/master/raspi-blockclock.jpg" alt="raspi-blockclock" width="300"/>
+
+<img src="https://github.com/frangb/raspi-blockclock/blob/master/raspi-blockclock.jpg" alt="bitclock" width="300"/>
 
 
 ## Lista de la compra.
