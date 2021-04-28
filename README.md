@@ -1,7 +1,7 @@
 # bitclock
 bitclock es un proyecto para mostrar información relativa a bitcoin en una raspberry Pi zero W con pantalla de tinta electrónica
 
-<img src="https://github.com/frangb/raspi-blockclock/blob/master/raspi-blockclock.jpg" alt="bitclock" width="300"/>
+<img src="https://github.com/frangb/bitclock/blob/master/raspi-blockclock.jpg" alt="bitclock" width="300"/>
 
 
 ## Lista de la compra.
@@ -116,13 +116,13 @@ sudo nano /etc/rc.local
 ```
 Al final del archivo, antes de la linea ```exit 0``` añadimos el siguiente comando
 ```
-sudo python3 btc_ticker.py -t 300 -c USD -d PRICE -tz Europe/Madrid &
+sudo python3 /home/pi/bitclock/btc_ticker.py -t 300 -c USD -d PRICE -tz Europe/Madrid &
 ```
 *En este ejemplo he utilizado como intervalo de refresco 5 minutos (300 segundos) y como zona horaria Europe/Madrid, pero puedes cambiar estos parámetros a tu conveniencia*
 
 b) Si queremos poner en marcha el script nosotros manualmente debemos ejecutarlo con de la siguiente forma, para que el proceso no se pare cuando cerremos la sesión de SSH
 ```
-nohup python3 /home/pi/raspi-blockclock/btc_ticker.py -t 300 -c USD -d PRICE -tz Europe/Madrid
+nohup python3 /home/pi/bitclock/btc_ticker.py -t 300 -c USD -d PRICE -tz Europe/Madrid
 ```
 
 ## Opcional
@@ -139,5 +139,5 @@ rm -rf bitclock
 
 y a continuación volver a descargar el repositorio mediante el comando:
 ```
-git clone https://github.com/frangb/raspi-blockclock
+git clone https://github.com/frangb/bitclock
 ```
