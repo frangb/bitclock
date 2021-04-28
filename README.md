@@ -84,7 +84,7 @@ sudo apt-get install libatlas-base-dev
 ## Descarga del código del script
 Descargamos el proyecto desde github
 ```
-sudo git clone https://github.com/frangb/bitclock
+git clone https://github.com/frangb/bitclock
 ```
 Instalamos los paquetes requeridos
 ```
@@ -116,7 +116,7 @@ sudo nano /etc/rc.local
 ```
 Al final del archivo, antes de la linea ```exit 0``` añadimos el siguiente comando
 ```
-sudo python3 /home/pi/bitclock/btc_ticker.py -t 300 -c USD -d PRICE -tz Europe/Madrid &
+python3 /home/pi/bitclock/btc_ticker.py -t 300 -c USD -d PRICE -tz Europe/Madrid &
 ```
 *En este ejemplo he utilizado como intervalo de refresco 5 minutos (300 segundos) y como zona horaria Europe/Madrid, pero puedes cambiar estos parámetros a tu conveniencia*
 
@@ -130,6 +130,7 @@ Si la luz verde del LED de la Raspberry Pi Zero W nos parece molesto, podemos de
 ```
 echo none | sudo tee /sys/class/leds/led0/trigger
 ```
+Esta linea también la podemos añadir en rc.local si lo deseamos, para que la luz se apague siempre al reiniciar la Raspberry Pi Zero
 
 ## ¿Cómo actualizar?
 Si el proyecto ha sufrido algún cambio y necesitas actualizarlo, únicamente tienes que acceder por ssh a tu raspberry pi zero, borrar el directorio de la aplicación mediante el comando:

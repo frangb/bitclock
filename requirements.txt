@@ -3,3 +3,4 @@ Pillow==5.4.1
 pytz==2021.1
 RPi.GPIO==0.7.0
 spidev==3.5
+pytz==2021.1
