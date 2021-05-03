@@ -10,8 +10,8 @@ We will need the following material. I leave the Aliexpress links of what I have
 - 1 x micro hdmi to hdmi cable (or micro hdmi to hdmi adaptor, if you already have a hdmi cable) [link](https://es.aliexpress.com/item/10000404075798.html?spm=a2g0s.9042311.0.0.5d5363c0IMK1H6)
 - 1 x power supply for raspberry pi zero (only if you need it. In case you have a power strip to connect it via USB with 5V output it would not be necessary).
 - 1 x 2'13 inches waveshare e-ink screen [link](https://es.aliexpress.com/item/4001261285356.html?spm=a2g0s.9042311.0.0.5d5363c0IMK1H6)
-- 1 x USB keyboard (puedes usar cualquier teclado que tengas por casa, ya que va a ser solo un momento) and one USB to mini-USB adaptor [link](https://es.aliexpress.com/item/1005001894830612.html?spm=a2g0o.productlist.0.0.3e52645fcWv8zN&algo_pvid=e53fb4cd-43b2-458f-9b1c-6b3fcd091c48&algo_expid=e53fb4cd-43b2-458f-9b1c-6b3fcd091c48-4&btsid=2100bde116178130299921634edfcd&ws_ab_test=searchweb0_0,searchweb201602_,searchweb201603_)
-- 1 x tarjeta microSD de 8 GB o superior
+- 1 x USB keyboard (you can use any keyboard you have at home) and one USB to mini-USB adaptor [link](https://es.aliexpress.com/item/1005001894830612.html?spm=a2g0o.productlist.0.0.3e52645fcWv8zN&algo_pvid=e53fb4cd-43b2-458f-9b1c-6b3fcd091c48&algo_expid=e53fb4cd-43b2-458f-9b1c-6b3fcd091c48-4&btsid=2100bde116178130299921634edfcd&ws_ab_test=searchweb0_0,searchweb201602_,searchweb201603_)
+- 1 x microSD card (8 GB or more)
 
 ## Assembly
 If we have purchased the Raspberry Pi Zero w with the header pin already welded, there will be no complications. We will simply fit the screen in the GPIO port of the Raspberry and that's it.
