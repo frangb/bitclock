@@ -3,6 +3,7 @@ bitclock es un proyecto para mostrar información relativa a bitcoin en una rasp
 
 <img src="https://github.com/frangb/bitclock/blob/master/raspi-blockclock.jpg" alt="bitclock" width="300"/>
 
+Read this in other languages: [English](README.en.md)
 
 ## Lista de la compra.
 Necesitaremos el siguiente material. Dejo los enlaces de Aliexpress de lo que he comprado yo, pero en realidad lo podéis comprar donde queráis (amazon, etc...)
