@@ -11,6 +11,47 @@ import requests
 import pytz
 import argparse
 
+def get_price():
+	try:
+		response = requests.get('https://api.coindesk.com/v1/bpi/currentprice.json')
+		data = response.json()
+		price = str(int(float(data["bpi"][args.currency]["rate"].replace(",",""))))
+	except requests.exceptions.RequestException:
+		price = "Err"
+		pass #volveremos a intentar tras el intervalo
+	return price
+
+def get_block():
+	try:
+		response = requests.get('https://blockchain.info/latestblock')
+		data = response.json()
+		block =  str(data['height'])
+	except requests.exceptions.RequestException:
+		block = "Err Blk"
+		pass #volveremos a intentar tras el intervalo
+	return block
+
+def get_fees():
+	try:
+		response = requests.get('https://mempool.space/api/v1/fees/recommended')
+		data = response.json()
+		fee = "Fee: " + str(data['fastestFee']) + " / " + str(data['halfHourFee']) + " / " + str(data['hourFee']) + " sats/vByte"
+	except requests.exceptions.RequestException:
+		fee = "Err Fee"
+		pass #volvemos a intentar tras el intervalo
+	return fee
+
+def get_taproot():
+    try:
+        url = 'https://taproot.watch'
+        response = requests.get(url)
+        matched_lines = [line for line in response.text.split('\n') if "non-signalling" in line]
+        res = [int(s) for s in matched_lines[0].split() if s.isdigit()]
+    except requests.exceptions.RequestException:
+        res = "Err Tr"
+        pass #volvemos a intentar tras el intervalo
+    return res
+
 parser = argparse.ArgumentParser(description="Muestra en la pantalla de tinta electrónica la información solicitada por el usuario")
 parser.add_argument("-t", "--time",
 					help="Tiempo de refresco en segundos",
@@ -25,8 +66,8 @@ parser.add_argument("-c", "--currency",
 
 parser.add_argument("-d", "--display",
 					type=str,
-					help="Información a mostrar: PRICE, BLOCK o PRCBLK (alternar entre los dos)",
-					choices=["PRICE", "BLOCK", "PRCBLK"],
+					help="Información a mostrar: PRICE, BLOCK, PRCBLK (alternar entre los dos) o TAPROOT (info sobre activación de Taproot)",
+					choices=["PRICE", "BLOCK", "PRCBLK", "TAPROOT"],
 					default="PRICE")
 
 parser.add_argument("-tz", "--timezone",
@@ -63,6 +104,8 @@ try:
 	fontprice = ImageFont.truetype(os.path.join(picdir, 'DS-DIGIT.TTF'), 96)
 	# Esta para el bloque (mas pequeña porque hacen falta seis dígitos)
 	fontblk = ImageFont.truetype(os.path.join(picdir, 'DS-DIGIT.TTF'), 80)
+	# Esta es la fuente para taproot
+	fonttr = ImageFont.truetype(os.path.join(picdir, 'DS-DIGIT.TTF'), 60)
 
 	logging.info("Drawing on the image...")
 	image = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
@@ -80,32 +123,16 @@ try:
 		
 		#obtenemos precio
 		if((args.display == "PRICE") or (args.display == "PRCBLK")):
-			try:
-				response = requests.get('https://api.coindesk.com/v1/bpi/currentprice.json')
-				data = response.json()
-				price = str(int(float(data["bpi"][args.currency]["rate"].replace(",",""))))
-			except requests.exceptions.RequestException:
-				price = "Err"
-				pass #volveremos a intentar tras el intervalo
+			price = get_price()
 		
 		#obtenemos bloque
 		if((args.display == "BLOCK") or (args.display == "PRCBLK")):
-			try:
-				response = requests.get('https://blockchain.info/latestblock')
-				data = response.json()
-				block =  str(data['height'])
-			except requests.exceptions.RequestException:
-				block = "Err Blk"
-				pass #volveremos a intentar tras el intervalo
-			
-			try:
-				response = requests.get('https://mempool.space/api/v1/fees/recommended')
-				data = response.json()
-				fee = "Fee: " + str(data['fastestFee']) + " / " + str(data['halfHourFee']) + " / " + str(data['hourFee']) + " sats/vByte"
-			except requests.exceptions.RequestException:
-				fee = "Err Fee"
-				pass #volvemos a intentar tras el intervalo
-
+			block = get_block()
+			fee =  get_fees()
+   
+		if(args.display =="TAPROOT"):
+			numbers = get_taproot()
+   
 		if(args.display == "PRICE"):
 			time_draw.text((5, 20), price, font = fontprice, fill = 0)
 			time_draw.text((100, 105), args.currency, font = font16, fill = 0)
@@ -123,6 +150,11 @@ try:
 				time_draw.text((5, 20), price, font = fontprice, fill = 0)
 				time_draw.text((100, 105), args.currency, font = font16, fill = 0)
 				displayblock = True
+		elif(args.display == "TAPROOT"):
+			total = numbers[0] + numbers[2]
+			percentage = round(numbers[0] * 100 / total,2)
+			time_draw.text((10, 20), str(numbers[0]) + " / " + str(total), font = fonttr, fill = 0)
+			time_draw.text((15, 90), str(percentage) + "% - " + str(numbers[1]) + " blocks to go", font = font20, fill = 0)		
     
 		#escribimos la fecha y hora encima
 		time_draw.text((5, 0), tz.localize(now).strftime("%d/%m/%Y %H:%M:%S"), font = font14, fill = 0)
