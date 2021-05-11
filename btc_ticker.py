@@ -105,7 +105,7 @@ try:
 	# Esta para el bloque (mas pequeña porque hacen falta seis dígitos)
 	fontblk = ImageFont.truetype(os.path.join(picdir, 'DS-DIGIT.TTF'), 80)
 	# Esta es la fuente para taproot
-	fonttr = ImageFont.truetype(os.path.join(picdir, 'DS-DIGIT.TTF'), 60)
+	fonttr = ImageFont.truetype(os.path.join(picdir, 'DS-DIGIT.TTF'), 50)
 
 	logging.info("Drawing on the image...")
 	image = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
@@ -153,7 +153,7 @@ try:
 		elif(args.display == "TAPROOT"):
 			total = numbers[0] + numbers[2]
 			percentage = round(numbers[0] * 100 / total,2)
-			time_draw.text((10, 20), str(numbers[0]) + " / " + str(total), font = fonttr, fill = 0)
+			time_draw.text((5, 20), str(numbers[0]).zfill(4) + " / " + str(total).zfill(4), font = fonttr, fill = 0)
 			time_draw.text((15, 90), str(percentage) + "% - " + str(numbers[1]) + " blocks to go", font = font20, fill = 0)		
     
 		#escribimos la fecha y hora encima
