@@ -101,11 +101,11 @@ try:
 	font16 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 16)
 	font20 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 20)
 	# Esta es la fuente que usaremos para el precio del BTC
-	fontprice = ImageFont.truetype(os.path.join(picdir, 'DS-DIGIT.TTF'), 96)
+	fontprice = ImageFont.truetype(os.path.join(picdir, 'DS-DIGIT.TTF'), 60)
 	# Esta para el bloque (mas pequeña porque hacen falta seis dígitos)
-	fontblk = ImageFont.truetype(os.path.join(picdir, 'DS-DIGIT.TTF'), 80)
+	fontblk = ImageFont.truetype(os.path.join(picdir, 'DS-DIGIT.TTF'), 50)
 	# Esta es la fuente para taproot
-	fonttr = ImageFont.truetype(os.path.join(picdir, 'DS-DIGIT.TTF'), 50)
+	fonttr = ImageFont.truetype(os.path.join(picdir, 'DS-DIGIT.TTF'), 35)
 
 	logging.info("Drawing on the image...")
 	image = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
@@ -134,26 +134,26 @@ try:
 			numbers = get_taproot()
    
 		if(args.display == "PRICE"):
-			time_draw.text((5, 20), price, font = fontprice, fill = 0)
+			time_draw.text((5, 30), price, font = fontprice, fill = 0)
 			time_draw.text((100, 105), args.currency, font = font16, fill = 0)
    
 		elif(args.display == "BLOCK"):
-			time_draw.text((5, 20), block, font = fontblk, fill = 0)
+			time_draw.text((5, 30), block, font = fontblk, fill = 0)
 			time_draw.text((15, 100), fee, font = font16, fill = 0)
    
 		elif(args.display == "PRCBLK"):
 			if displayblock:
-				time_draw.text((5, 20), block, font = fontblk, fill = 0)
+				time_draw.text((5, 30), block, font = fontblk, fill = 0)
 				time_draw.text((15, 100), fee, font = font16, fill = 0)
 				displayblock = False
 			else:
-				time_draw.text((5, 20), price, font = fontprice, fill = 0)
+				time_draw.text((5, 30), price, font = fontprice, fill = 0)
 				time_draw.text((100, 105), args.currency, font = font16, fill = 0)
 				displayblock = True
 		elif(args.display == "TAPROOT"):
 			total = numbers[0] + numbers[2]
 			percentage = round(numbers[0] * 100 / total,2)
-			time_draw.text((5, 20), str(numbers[0]).zfill(4) + " / " + str(total).zfill(4), font = fonttr, fill = 0)
+			time_draw.text((5, 30), str(numbers[0]).zfill(4) + "  " + str(total).zfill(4), font = fonttr, fill = 0)
 			time_draw.text((15, 90), str(percentage) + "% - " + str(numbers[1]) + " blocks to go", font = font20, fill = 0)		
     
 		#escribimos la fecha y hora encima
