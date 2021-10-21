@@ -1,0 +1,12 @@
+[Unit]
+Description=Start raspi-blockclock server
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+ExecStart=/usr/bin/node /home/pi/raspi-blockclock/server/index.js
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

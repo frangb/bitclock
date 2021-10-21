@@ -1,0 +1,71 @@
+{{#each messages}}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{text}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{{/each}}
+
+<div class="col-md-4 mx-auto">
+    <div class="card grey rounded">
+        <div class="card-body">
+            <form method="POST">
+
+                <p><strong>Currency</strong></p>
+                <select class="form-select" aria-label="Default select example" name="currency">
+                    <option value="USD" selected>USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="sats / USD">sats / USD</option>
+                    <option value="sats / EUR">sats / EUR</option>
+                </select>
+                <br />
+                <p><strong>Refresh time (in seconds)</strong></p>
+
+                <div class="form-group d-grid gap-2">
+                
+                <input type="range" name="refresh" min="10" max="600" value="300" onchange="updateTextInput(this.value);">
+                
+                </div>
+                <div class="form-group d-grid gap-2">
+                <label id="textInput">300</label>
+                </div>
+                <br />
+
+                <div class="form-group d-grid gap-2">
+                    <button class="btn btn-dark btn-block" type="submit" name="startPrice" formaction="/start_price">
+                        Start PRICE
+                    </button>
+                </div>
+                <br />
+                <div class="form-group d-grid gap-2">
+                    <button class="btn btn-dark btn-block" type="submit" name="startBlock" formaction="/start_block">
+                        Start BLOCK
+                    </button>
+                </div>
+                <br />
+                <div class="form-group d-grid gap-2">
+                    <button class="btn btn-dark btn-block" type="submit" name="startMulti" formaction="/start_multi">
+                        Start MULTI-SCREEN
+                    </button>
+                </div>
+                <br />
+                <div class="form-group d-grid gap-2">
+                    <button class="btn btn-dark btn-block" type="submit" name="startMulti" formaction="/start_quotes">
+                        Start QUOTES
+                    </button>
+                </div>
+                <br />
+                <div class="form-group d-grid gap-2">
+                    <button class="btn btn-dark btn-block" type="submit" name="startMulti" formaction="/stop">
+                        Stop service
+                    </button>
+                </div>
+                <br />
+                <div class="form-group d-grid gap-2">
+                    <button class="btn btn-dark btn-block" type="submit" name="startMulti" formaction="/reboot">
+                        Reboot rPi
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

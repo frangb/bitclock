@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'blockclockFont';
+    src: url("../fonts/DS-DIGIT.TTF");
+}
+
+body {
+    background: #fa5252;
+}
+
+.grey {
+    background-color: #868684;
+}
+
+.blockclock {
+    font-family: 'blockclockFont', Fallback, sans-serif;
+    font-size: xx-large;
+}
+
+#ex1Slider .slider-selection {
+    background: #BABABA;
+}

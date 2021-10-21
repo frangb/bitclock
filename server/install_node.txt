@@ -1,0 +1,22 @@
+How to install NODE js in order to run the server (if you want to control your bitclock from your computer)
+
+wget https://unofficial-builds.nodejs.org/download/release/v15.9.0/node-v15.9.0-linux-armv6l.tar.xz
+tar xvfJ node-v15.9.0-linux-armv6l.tar.xz
+sudo cp -R node-v15.9.0-linux-armv6l/* /usr/local
+rm -rf node*
+sudo reboot
+
+//after reboot, check if node is correctly installed in your system
+node -v && npm -v
+
+//copy service file in /etc/sytemd with the following command
+sudo cp bitclock.service /etc/systemd/system
+sudo systemctl enable bitclock.service
+
+//start the system manually
+sudo systemctl start bitclock.service
+
+//check log to see if service is running
+journalctl -u bitclock
+
+

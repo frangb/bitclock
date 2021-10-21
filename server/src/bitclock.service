@@ -1,0 +1,13 @@
+[Unit]
+Description=bitclock Service
+After=network.target
+
+[Service]
+WorkingDirectory=/home/pi/bitclock/server/src
+ExecStart=node index.js
+Restart=on-failure
+User=pi
+Environment=PORT=3000
+
+[Install]
+WantedBy=multi-user.target

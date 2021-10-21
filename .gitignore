@@ -1,3 +1,7 @@
 venv
 test.py
 README.txt
+testsocket.py
+images
+server/node_modules
+server/src/node_modules
