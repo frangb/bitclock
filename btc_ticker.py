@@ -38,7 +38,7 @@ def get_price():
             price = str(
                 int(float(data["bpi"][args.currency]["rate"].replace(",", ""))))
     except requests.exceptions.RequestException:
-        price = "Err"
+        price = "Err Prc"
         pass  # volveremos a intentar tras el intervalo
     return price
 
@@ -127,8 +127,10 @@ try:
     font14 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 14)
     font16 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 16)
     font20 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 20)
-    # Esta es la fuente que usaremos para el precio del BTC
+    # Esta es la fuente que usaremos para el precio del BTC inferior a 100K
     fontprice = ImageFont.truetype(os.path.join(picdir, 'DS-DIGIT.TTF'), 60)
+    # Esta es la fuente que usaremos para el precio del BTC superior a 100K
+    fontprice100 = ImageFont.truetype(os.path.join(picdir, 'DS-DIGIT.TTF'), 50)
     # Esta para el bloque (mas pequeña porque hacen falta seis dígitos)
     fontblk = ImageFont.truetype(os.path.join(picdir, 'DS-DIGIT.TTF'), 50)
 
@@ -170,7 +172,10 @@ try:
                     time_draw.text((100, 105), "sats / " + args.currency,
                                    font=font16, fill=0)
                 else:
-                    time_draw.text((3, 35), price, font=fontprice, fill=0)
+                    if int(price) < 100000:
+                        time_draw.text((3, 35), price, font=fontprice, fill=0)
+                    else:
+                        time_draw.text((2, 35), price, font=fontprice100, fill=0)
                     time_draw.text((100, 105), args.currency,
                                    font=font16, fill=0)
 
@@ -189,7 +194,10 @@ try:
                         time_draw.text((100, 105), "sats / " + args.currency,
                                        font=font16, fill=0)
                     else:
-                        time_draw.text((3, 35), price, font=fontprice, fill=0)
+                        if int(price) < 100000:
+                            time_draw.text((3, 35), price, font=fontprice, fill=0)
+                        else:
+                            time_draw.text((2, 35), price, font=fontprice100, fill=0)
                         time_draw.text((100, 105), args.currency,
                                        font=font16, fill=0)
                     displayblock = True
